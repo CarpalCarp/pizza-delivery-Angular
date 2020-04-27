@@ -1,0 +1,45 @@
+.change-font-form{
+    background-color: #fff;
+    border: solid 2px black;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
+    max-width: 350px;
+    max-height: 275px;
+    min-height: 275px;
+}
+
+.change-font-form > div{
+    min-height: 230px;
+    max-height: 230px;
+    max-width: 350px;
+    overflow: auto;
+}
+
+/*font-family classes*/
+
+.Helvetica{
+    font-family: Helvetica;
+}
+
+.Cursive{
+    font-family: cursive;
+}
+
+.Arial-Bold{
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+    font-weight: bolder;
+}
+
+.Monospace-Bold{
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bolder;
+}
+
+.Impact-Bold{
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}

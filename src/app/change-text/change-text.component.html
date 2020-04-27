@@ -1,0 +1,18 @@
+<div class="change-font-form">
+    <div>
+        <h3>Change Font</h3>
+        <div *ngFor="let font of fonts" class="d-flex justify-content-start">
+            <label [class]="font.name">
+                <input type="radio" name="fonts" [value]="font.id" (click)="getFont(font.name)">
+                {{ font.name }}
+            </label>
+        </div>
+        <h3>Change Font Size</h3>
+        <div *ngFor="let size of sizes" class="d-flex justify-content-start">
+            <label [class]="size.name">
+                <input type="radio" name="sizes" [value]="size.id" (click)="getFontSize(size.name)">
+                {{ size.name }} <span *ngIf="size.name === '16'"> (Default)</span>
+            </label>
+        </div>
+    </div>
+</div>

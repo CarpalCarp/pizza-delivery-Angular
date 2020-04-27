@@ -1,0 +1,139 @@
+.menu-button{
+    border: none;
+    width: 30px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.order-button{
+    border: 2px solid #ff8629;
+    border-radius: 8px;
+    padding: 2.5px;
+    background-color: #ff8629;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    outline: none; /*removes border around button when clicked*/
+    color: #fff;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.order-button:disabled{
+    border: 2px solid gray;
+    background-color: gray;
+    transition-duration: 0s;
+    outline: none;
+}
+
+.order-button:hover:disabled{
+    background-color: gray;
+    color: #fff;
+}
+
+.order-button:hover{
+    background-color: #fff;
+    color: #ff8629;
+}
+
+.add-selection{
+    background-color: #63ff8d;
+}
+
+.subtract-selection{
+    background-color: red;
+}
+
+.selection-div{
+    min-height: 160px;
+    max-height: 160px;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.selection-div > div > span > button{
+    margin-right: 5px;
+}
+
+.order-form-div, .takeCard, .takeAddress{
+    padding: 20px;
+    padding-top: 10px;
+    background-color: white;
+    border: solid 2px black;
+    min-height: 275px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding-bottom: 10px;
+}
+
+.takeCard, .takeAddress{
+    min-height: none;
+    max-height: none;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.takeCard button + button, .takeAddress button + button{
+    margin-left: 5px;
+}
+
+/* First half of main content */
+form > div > div > div:first-child{
+    min-width: 50%;
+    margin-right: 20px;
+}
+
+/* Second half of main content */
+form > div > div > div:nth-child(2){
+    min-width: 50%;
+    max-height: 244.6px;
+    overflow: auto;
+}
+
+form > div > div > div+div ul{
+    padding-inline-start: 25px;
+    margin-bottom: 0;
+}
+
+form > div > div > div > div+div p{
+    margin-bottom: 0;
+}
+
+form > div > div > div+div p{
+    margin-bottom: 0;
+}
+
+.btn{
+    margin-bottom: 10px;
+}
+
+.alert{
+    margin-top: 5px;
+}
+
+/*font-family classes*/
+
+.Helvetica{
+    font-family: Helvetica;
+}
+
+.Cursive{
+    font-family: cursive;
+}
+
+.Arial-Bold{
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+    font-weight: bolder;
+}
+
+.Monospace-Bold{
+    font-family: "Courier New", Courier, monospace;
+    font-weight: bolder;
+}
+
+.Impact-Bold{
+    font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+}

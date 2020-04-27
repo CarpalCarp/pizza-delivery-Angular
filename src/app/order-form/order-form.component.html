@@ -1,0 +1,234 @@
+<form [formGroup]="form">
+    <div>
+        <div [class]="getFontType()" class="d-flex justify-content-center order-form-div"
+            *ngIf="getFormSection() !== 'Address Screen' && getFormSection() !== 'Card Screen'">
+            <div *ngIf="getFormSection() !== 'Address Screen' && getFormSection() !== 'Card Screen'">
+                <div *ngIf="getFormSection() === 'Home'">
+                    <h3>Menu</h3>
+                </div>
+                <div *ngIf="getFormSection() === 'Home'" class="selection-div d-flex align-items-center"
+                    [style.font-size.px]="getFontSize()">
+                    <div>
+                        <p>"In Pizza We Trust"</p>
+                        <p>-Founder</p>
+                    </div>
+                </div>
+
+                <div
+                    *ngIf="getFormSection() === 'Size Screen' || getFormSection() === 'Sauce Screen' || getFormSection() === 'Topping Screen'">
+                    <h3>Order Pizza</h3>
+                </div>
+
+                <div *ngIf="getFormSection() === 'Drinks Screen'">
+                    <h3>Order Drink(s)</h3>
+                </div>
+
+                <div *ngIf="getFormSection() === 'Side Screen'">
+                    <h3>Order Side(s)</h3>
+                </div>
+
+                <div *ngIf="getFormSection() === 'Review Screen'">
+                    <h3>Review Order</h3>
+                </div>
+
+                <div *ngIf="getFormSection() === 'Size Screen'" class="selection-div">
+                    <h5>Pick Size</h5>
+                    <div *ngFor="let size of pizzaSizes" class="radio" [style.font-size.px]="getFontSize()">
+                        <label>
+                            <input (ngModel)="size.checked" formControlName="pizzaSize" type="radio" name="pizzaSize"
+                                [value]="size.id" (click)="getSize(size.name)">
+                            {{ size.name }}
+                            {{ size.price | currency }}
+                        </label>
+                    </div>
+                </div>
+
+                <div *ngIf="getFormSection() === 'Sauce Screen'" class="selection-div">
+                    <h5>Pick Sauce</h5>
+                    <div *ngFor="let sauce of pizzaSauces" class="radio" [style.font-size.px]="getFontSize()">
+                        <label>
+                            <input (ngModel)="sauce.checked" formControlName="pizzaSauce" type="radio"
+                                [value]="sauce.id" (click)="getSauce(sauce.name)">
+                            {{ sauce.name }}
+                        </label>
+                    </div>
+                </div>
+
+                <div *ngIf="getFormSection() === 'Topping Screen'" class="selection-div">
+                    <h5>Toppings</h5>
+                    <div *ngFor="let topping of pizzaToppings" [style.font-size.px]="getFontSize()">
+                        <span>
+                            <button *ngIf="!order.pizzaToppings.includes(topping.name)"
+                                class="menu-button add-selection" (click)="addTopping(topping.name)">+</button>
+                            <button *ngIf="order.pizzaToppings.includes(topping.name)"
+                                class="menu-button subtract-selection" (click)="addTopping(topping.name)">-</button>
+                        </span>
+                        <span>
+                            {{ topping.name }}
+                            {{ topping.price | currency }}
+                        </span>
+                    </div>
+                </div>
+
+                <div *ngIf="getFormSection() === 'Drinks Screen'" class="selection-div">
+                    <div *ngFor="let drink of drinks" [style.font-size.px]="getFontSize()">
+                        <span>
+                            <button *ngIf="!order.drinks.includes(drink.name)" class="menu-button add-selection"
+                                (click)="addDrinks(drink.name)">+</button>
+                            <button *ngIf="order.drinks.includes(drink.name)" class="menu-button subtract-selection"
+                                (click)="addDrinks(drink.name)">-</button>
+                        </span>
+                        <span>{{ drink.name }}
+                            {{ drink.price | currency }}
+                        </span>
+                    </div>
+                </div>
+
+                <div *ngIf="getFormSection() === 'Side Screen'" class="selection-div">
+                    <div *ngFor="let side of sides" [style.font-size.px]="getFontSize()">
+                        <span>
+                            <button *ngIf="!order.sides.includes(side.name)" class="menu-button add-selection"
+                                (click)="addSides(side.name)">+</button>
+                            <button *ngIf="order.sides.includes(side.name)" class="menu-button subtract-selection"
+                                (click)="addSides(side.name)">-</button>
+                        </span>
+                        <span>{{ side.name }}
+                            {{ side.price | currency }}
+                        </span>
+
+                    </div>
+                </div>
+
+                <div *ngIf="getFormSection() === 'Review Screen'" class="selection-div"
+                    [style.font-size.px]="getFontSize()">
+                    <p>Subtotal: {{ order.subTotal | currency}}</p>
+                    <p style="padding-left:33px">+ tax: {{ order.tax | currency }}</p>
+                    <p>Total: {{ order.total | currency }}</p>
+                </div>
+
+                <div style="min-width:240px">
+                    <button *ngIf="getFormSection() === 'Home'" class="order-button" (click)="nextGroup()"
+                        style="margin-right: 5px">Order
+                        Pizza</button>
+
+                    <button *ngIf="getFormSection() !== 'Home'" class="order-button" (click)="previousGroup()"
+                        style="margin-right: 5px">Back</button>
+
+                    <button *ngIf="getFormSection() === 'Topping Screen' || getFormSection() === 'Drinks Screen'"
+                        class="order-button" (click)="nextGroup()" style="margin-right: 5px">Next</button>
+
+                    <button *ngIf="getFormSection() === 'Side Screen'" class="order-button"
+                        (click)="nextGroupAndCalculateTax()" style="margin-right: 5px">Review</button>
+
+                    <button *ngIf="getFormSection() === 'Size Screen'" class="order-button" (click)="nextGroup()"
+                        [disabled]="order.pizzaSize === ''" style="margin-right: 5px">Sauce</button>
+
+                    <button *ngIf="getFormSection() === 'Sauce Screen'" class="order-button" (click)="nextGroup()"
+                        [disabled]="order.pizzaSauce === ''" style="margin-right: 5px">Toppings</button>
+
+                    <button *ngIf="getFormSection() === 'Review Screen'" class="order-button" (click)="nextGroup()"
+                        style="margin-right: 5px;">Confirm</button>
+
+                    <button *ngIf="getFormSection() !== 'Home'" class="order-button"
+                        (click)="cancelOrder()">Cancel</button>
+                </div>
+            </div>
+
+            <div *ngIf="getFormSection() !== 'Address Screen' && getFormSection() !== 'Card Screen'">
+                <div [style.font-size.px]="getFontSize()">
+                    <h2>Order</h2>
+                    <p>Subtotal: {{ order.subTotal | currency }}</p>
+                    <p *ngIf="order.pizzaSize !== ''">Size: {{ order.pizzaSize }}</p>
+                    <p *ngIf="order.pizzaSauce !== ''">Sauce: {{ order.pizzaSauce }}</p>
+                    <div *ngIf="order.pizzaToppings.length !== 0">
+                        <p>Topping(s):</p>
+                        <ul>
+                            <li *ngFor="let topping of order.pizzaToppings">{{ topping }}</li>
+                        </ul>
+                    </div>
+                    <div *ngIf="order.drinks.length !== 0">
+                        <p>Drink(s):</p>
+                        <ul>
+                            <li *ngFor="let drink of order.drinks">{{ drink }}</li>
+                        </ul>
+                    </div>
+                    <div *ngIf="order.sides.length !== 0">
+                        <p>Side(s):</p>
+                        <ul>
+                            <li *ngFor="let side of order.sides">{{ side }}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div [style.font-size.px]="getFontSize()" [class]="getFontType()">
+            <div class="takeAddress" *ngIf="getFormSection() === 'Address Screen'">
+                <h3>Address Information</h3>
+                <div class="form-group">
+                    <input formControlName="houseAddress" class="form-control" type="text" id="houseAddress"
+                        placeholder="Enter your address">
+                    <div *ngIf="houseAddress.touched && houseAddress.invalid" class="alert alert-danger">
+                        <span *ngIf="houseAddress.errors.required">Address required</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input formControlName="city" class="form-control" type="text" id="city" placeholder="City name">
+                    <div *ngIf="city.touched && city.invalid" class="alert alert-danger">
+                        <span *ngIf="city.errors.required">City required</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input formControlName="state" class="form-control" type="text" id="state" placeholder="State">
+                    <div *ngIf="state.touched && state.invalid" class="alert alert-danger">
+                        <span *ngIf="state.errors.required">State required</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input formControlName="zipCode" mask="00000" class="form-control" type="text" id="zipCode"
+                        placeholder="Enter your zip code">
+                    <div *ngIf="zipCode.touched && zipCode.invalid" class="alert alert-danger">
+                        <span *ngIf="zipCode.errors.required">Zip code required</span>
+                    </div>
+                </div>
+                <button class="order-button" (click)="cancelOrder()">Cancel</button>
+                <button class="order-button" (click)="previousGroup()">Back</button>
+                <button *ngIf="getFormSection() === 'Address Screen'" class="order-button" (click)="nextGroup()"
+                    style="margin-right: 5px">Next</button>
+            </div>
+            <div class="takeCard" *ngIf="getFormSection() === 'Card Screen'">
+                <h3>Card Information</h3>
+                <div class="form-group">
+                    <input formControlName="fullName" class="form-control" type="text" id="fullName"
+                        placeholder="Name on card">
+                    <div *ngIf="fullName.touched && fullName.invalid" class="alert alert-danger">
+                        <span *ngIf="fullName.errors.required">Full name on card required</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input formControlName="cardNumber" mask="0000000000000000" maxlength="16" class="form-control"
+                        type="text" id="cardNumber" placeholder="Card number">
+                    <div *ngIf="cardNumber.touched && cardNumber.invalid" class="alert alert-danger">
+                        <span *ngIf="cardNumber.errors.required">Card number required for purchase</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input formControlName="expirationDate" mask="(00/00)" class="form-control" type="text"
+                        id="expirationDate" placeholder="Expiration date (MM / YY)">
+                    <div *ngIf="expirationDate.touched && expirationDate.invalid" class="alert alert-danger">
+                        <span *ngIf="expirationDate.errors.required">Expiration date required</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input formControlName="securityCode" mask="000" class="form-control" type="text" id="securityCode"
+                        placeholder="Security code">
+                    <div *ngIf="securityCode.touched && securityCode.invalid" class="alert alert-danger">
+                        <span *ngIf="securityCode.errors.required">Security code required</span>
+                    </div>
+                </div>
+                <button class="order-button" (click)="cancelOrder()">Cancel</button>
+                <button class="order-button" (click)="previousGroup()">Back</button>
+                <button class="order-button" (click)="sendPayment()" [disabled]="!form.valid">Pay now</button>
+            </div>
+        </div>
+    </div>
+</form>

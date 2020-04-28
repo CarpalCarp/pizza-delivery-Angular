@@ -205,10 +205,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <input formControlName="cardNumber" mask="0000000000000000" maxlength="16" class="form-control"
-                        type="text" id="cardNumber" placeholder="Card number">
+                    <input formControlName="cardNumber" mask="0000000000000000" maxlength="16" minlength="16"
+                        class="form-control" type="text" id="cardNumber" placeholder="Card number">
                     <div *ngIf="cardNumber.touched && cardNumber.invalid" class="alert alert-danger">
                         <span *ngIf="cardNumber.errors.required">Card number required for purchase</span>
+                        <span *ngIf="cardNumber.errors.minlength">Card number must be 16 digits</span>
                     </div>
                 </div>
                 <div class="form-group">
